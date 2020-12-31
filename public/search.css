@@ -1,0 +1,89 @@
+#search-results {
+  width: 100%;
+  font-size: 16px;
+  line-height: 1em;
+}
+
+.package-info {
+  border-bottom: 1px solid #ccc;
+  padding: 15px;
+}
+
+.package-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.package-link {
+  color: black;
+  text-decoration: none;
+}
+
+.package-name {
+  font-size: 1.2em;
+}
+
+.package-keywords {
+  padding: 5px 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.package-keywords > div {
+  margin: 5px;
+  padding: 5px;
+  background-color: #eee;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.package-publish {
+  color: #555;
+}
+
+.package-avatar {
+  margin-bottom: -10px;
+}
+
+.package-username {
+  font-weight: bold;
+}
+
+.info-description-panel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.info-links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.info-links > a {
+  text-decoration: none;
+  margin: 0 5px;
+  color: black;
+  transition: 300ms color;
+}
+
+.info-links > a .svg-inline--fa {
+  width: 20px;
+  height: 20px;
+}
+
+.package-website:hover {
+  color: #4f9ae9;
+}
+
+.package-github:hover {
+  color: #92c544;
+}
+
+.package-npm:hover {
+  color: #cb2c38;
+}

@@ -1,0 +1,67 @@
+.hljs {
+  color: #aaa;
+}
+
+.hljs-strong,
+.hljs-emphasis {
+  color: #aaa;
+}
+
+.hljs-bullet,
+.hljs-quote,
+.hljs-link,
+.hljs-number,
+.hljs-regexp,
+.hljs-literal {
+  color: white;
+}
+
+.hljs-code,
+.hljs-selector-class {
+  color: #daa000;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-section,
+.hljs-attribute,
+.hljs-name,
+.hljs-variable {
+  color: #ffbb00;
+}
+
+.hljs-attr {
+  color: #fdd76c;
+}
+
+.hljs-params {
+  color: #ccc;
+}
+
+.hljs-string {
+  color: #ccc;
+}
+
+.hljs-subst,
+.hljs-type,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-symbol,
+.hljs-selector-id,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-addition {
+  color: #fdd76c;
+}
+
+.hljs-comment,
+.hljs-deletion,
+.hljs-meta {
+  color: #ccc;
+}
