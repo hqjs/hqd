@@ -68,3 +68,4 @@ package-lock.json
 
 # Test installations
 test/hqd_test
+test/.cache
