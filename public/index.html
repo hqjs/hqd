@@ -308,7 +308,7 @@
         <section>
           <h2 id="dep-res">Dependencies resolution</h2>
           <p>
-            Rules based dynamic dependency resolution allows to keep the product up to date and fix bugs across all related projects. If package version in import URL is not specified explicitlyit will be resolved dynamically based on configuration file
+            Rules based dynamic dependency resolution allows to keep the product up to date and fix bugs across all related projects. If package version in import URL is not specified explicitly it will be resolved dynamically based on configuration file
             <code>resolution.json</code>
             that has records of the following shape:
             <code class="syntax syntax-info">
@@ -402,7 +402,7 @@
         </code>
         where real
         <code>environment</code>
-        is being substituted to the template. Update dist-tags when new version of the package being released.
+        is being substituted to the template. Update dist-tags when a new version of the package is being released.
       </p>
     </section>
     <section>
@@ -412,7 +412,7 @@
         <strong>npm</strong>
         has CommonJS modules format that is native for node.js. However no browser supports that format, instead browsers understand EcmaScript modules.
         <strong>hqd</strong>
-        transforms CommonJS into EcmaScript modules that allows the code to work
+        transforms CommonJS into EcmaScript modules that allows the code to work e.g.
         <code class="syntax">
           <span class="command">import</span>
           {
@@ -421,7 +421,7 @@
           <span class="arg">'react'</span>;</code>
       </p>
       <p>
-        Some system modules can be imported as well
+        Some system modules can be imported as well e.g.
         <code class="syntax">
           <span class="command">import</span>
           <span class="content">zlib</span>
@@ -448,8 +448,8 @@
     <section>
       <h2 id="meta-lang">Meta languages</h2>
       <p>
-        Meta languages are necessary to create modern web application, they provide shorter syntax, ensure type safety and improve development performance. TypeScript, CofeeScript, Jsx and Tsx that compiles to JavaScript, Scss, Sass, Less that transforms to Css and Pug that become HTML all supported by
-        <strong>hqd</strong>. Together with source maps it looks like this languages are natively working in your browser.
+        Meta languages are necessary to create modern web application, they provide shorter syntax, ensure type safety and improve development performance. TypeScript, CofeeScript, Jsx and Tsx that compile to JavaScript; Scss, Sass, Less that transform to Css and Pug that becomes HTML all supported by
+        <strong>hqd</strong>. Together with source maps it looks like these languages are natively working in your browser.
       </p>
     </section>
     <section>
@@ -457,7 +457,7 @@
       <p>
         Angular, React, Vue, Polymer, Svelte and other frameworks are supported natively. There is no need to configure building pipelines for them, just make sure
         <code>index.html</code>
-        has all necessary links to project styles and scripts. For Angular you need additionaly to include early experimental features polyffils to the
+        has all necessary links to project styles and scripts. For Angular you need additionaly to include early experimental features polyfills to the
         <code>main.ts</code>
         script:
         <code class="syntax">
@@ -482,7 +482,8 @@
     <section>
       <h2 id="long-cache">Long term cache</h2>
       <p>
-        Uses long term cache to reduce network traffic and speed up assets delivery. Due to nature of npm packages resources are cached as immutable if browser supports it
+        <strong>hqd<strong>
+        uses long term cache to reduce network traffic and to speed up assets delivery. Due to nature of npm packages resources are cached as immutable if browser supports it
         <code class="syntax">
           <span class="command">Cache-Control</span>:
           <span class="arg">immutable</span></code>
@@ -490,8 +491,8 @@
         <code>index.html</code>
         <pre>
             <code class="syntax">&lt;script&gt;
-  if ('serviceworker' in navigator) {
-    navigator.serviceworker.register('/sw.js', { scope: './' }).then(reg => {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js', { scope: './' }).then(reg => {
       console.log('service worker registration succeeded:', reg);
     }, error => {
       console.log('service worker registration failed:', error);
@@ -560,7 +561,7 @@ self.addEventListener('fetch', ev => ev.respondWith(fromCacheOrFetch(ev.request)
       <h2>What about development?</h2>
       <p>
         <strong>hqd</strong>
-        is production solution, it suits big distributed projects and allows to follow microservice architecture. It requires no babel or webpack configuration and can significantly speed up delivery and improve support processes. For development stage, please, use
+        is a production solution, it suits big distributed projects and allows to follow microservice architecture. It requires no babel or webpack configuration and can significantly speed up delivery and improve support processes. For development stage, please, use
         <a href="https://hqjs.org">hq</a>
         that does not need configuration as well. Together these tools can completely free you from building pipeline configuration routine.
       </p>
