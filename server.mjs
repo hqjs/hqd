@@ -26,6 +26,7 @@ const start = ({
   STREAM,
 } = {}) => {
   const options = {
+    allowHTTP1: true,
     cert: fs.readFileSync(path.resolve(ROOT, CERT, 'server.pem')),
     key: fs.readFileSync(path.resolve(ROOT, CERT, 'server-key.pem')),
   };
