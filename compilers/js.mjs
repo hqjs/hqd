@@ -472,7 +472,7 @@ const compileJS = async (ctx, content, sourceMap, { skipHQTrans = false, skipSM 
     browser,
     devDependencies,
   } = await readPackageJSON(path.resolve(ctx.installationPath, ctx.dirname.slice(1)), ctx.app.stream);
-  const resolvedDependencies = await resolveDependencies(ctx.installationPath, ctx.app.resolution);
+  const resolvedDependencies = await resolveDependencies(ctx.installationPath, ctx.app.resolution, ctx.app.stream);
   const {
     inputContent,
     inputSourceMap,

@@ -137,11 +137,11 @@ export const resolvePatternVersion = (module, resolutionPattern, lockPattern, pa
   }
 };
 
-export const resolveDependencies = async (moduleRoot, resolution) => {
+export const resolveDependencies = async (moduleRoot, resolution, stream) => {
   const resolvedDependencies = {};
   // TODO: cache packageJSON and packageLock for module root
   const { dependencies: lockDependencies = {} } = await readJSON(path.resolve(moduleRoot, 'package-lock.json'));
-  const { dependencies = {} } = await readPackageJSON(moduleRoot);
+  const { dependencies = {} } = await readPackageJSON(moduleRoot, stream);
   for (const [ module, pattern ] of Object.entries(dependencies)) {
     const [ namespace ] = module.split('/');
     const resolutionPattern = resolution[module] || resolution[namespace] || resolution['*'];
