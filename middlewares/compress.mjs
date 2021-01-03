@@ -67,7 +67,7 @@ export default () => async (ctx, next) => {
   if (!ctx.app.stream) saveStream.pipe(fs.createWriteStream(outputPath));
 
   ctx.body = content;
-  winston.log('info', 'Configure compression', { module: ctx.moduleURL, path: ctx.path });
+  if (ctx.app.debug) winston.log('info', 'Configure compression', { module: ctx.moduleURL, path: ctx.path });
   return next();
 };
 /* eslint-enable max-statements */

@@ -49,7 +49,6 @@ packageNameElement.innerText = packageName;
 const fetchPackageJSON = async () => {
   const res = await fetch(`${packageURL}/package.json`);
   const packageJSON = await res.json();
-  console.log(packageJSON);
   packageDescriptionElement.innerText = packageJSON.description;
   packageWebsiteElement.href = packageJSON.homepage;
   packageGithubElement.href = packageJSON.repository.url;

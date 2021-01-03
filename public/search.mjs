@@ -37,7 +37,6 @@ const makeSearch = async () => {
   loader.classList.add('hidden');
   results.hidden = false;
   const { objects } = await res.json();
-  console.log(objects);
   for (const { package: pkg } of objects) {
     const tr = createTableRow(pkg);
     table.appendChild(tr);

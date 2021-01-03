@@ -1,3 +1,5 @@
+import winston from '../logger.mjs';
+
 /* eslint-disable no-magic-numbers */
 const SUPPORT = {
   desktop: {
@@ -25,7 +27,7 @@ export default () => (ctx, next) => {
     const { name, target, major, minor } = ctx.store.ua;
     const [ supportMajor, supportMinor ] = SUPPORT[target][name];
     ctx.store.support = compareVersions(major, minor, supportMajor, supportMinor);
-    if (ctx.app.debug) console.log('Check support', ctx.path, ctx.store.support);
+    if (ctx.app.debug) winston.log('Check support', ctx.path, ctx.store.support);
   }
   if (!ctx.store.support) {
     ctx.body = 'For development please use browser that supports script type="module"';

@@ -1,3 +1,4 @@
+import winston from '../logger.mjs';
 import woothee from 'woothee';
 
 const uaMap = new Map;
@@ -28,7 +29,7 @@ export default () => (ctx, next) => {
       ctx.store.root = `./.dist/${target}/${name}/${ver}`;
       ctx.store.baseURI = ctx.request.origin;
       uaMap.set(uaString, ctx.store);
-      if (ctx.app.debug) console.log(
+      if (ctx.app.debug) winston.log(
         'Detect user agent',
         ctx.path,
         ctx.store.ua,

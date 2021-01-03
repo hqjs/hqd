@@ -10,6 +10,7 @@ import compileCSS from '../compilers/css.mjs';
 import compileHTML from '../compilers/html.mjs';
 import compileJS from '../compilers/js.mjs';
 import minifyImage from '../compilers/image.mjs';
+import winston from '../logger.mjs';
 
 const buildAsset = async ctx => {
   switch (ctx.stats.ext) {
@@ -111,12 +112,12 @@ const getBuild = async ctx => {
       return buildPromise;
     }
     if (ext === '.map') ctx.throw(HTTP_CODES.NOT_FOUND, `File ${ctx.dpath} not found`);
-    if (ctx.app.debug) console.log('Building', ctx.path, ua);
+    if (ctx.app.debug) winston.log('Building', ctx.path, ua);
     const buildPromise = makeBuild(ctx);
     build.set(ua, buildPromise);
     return buildPromise;
   } else {
-    if (ctx.app.debug) console.log('Skip building', ctx.path);
+    if (ctx.app.debug) winston.log('Skip building', ctx.path);
     return build.get(ua);
   }
 };
@@ -126,7 +127,7 @@ export default () => async (ctx, next) => {
   const { ua } = ctx.store;
   try {
     await getBuild(ctx);
-    if (ctx.app.debug) console.log('Sending', ctx.path);
+    if (ctx.app.debug) winston.log('Sending', ctx.path);
     ctx.type = ctx.stats.type;
   } catch (err) {
     build.setDirty(ua);

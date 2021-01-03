@@ -13,6 +13,7 @@ import {
 import fs from 'fs-extra';
 import path from 'path';
 import querystring from 'querystring';
+import winston from '../logger.mjs';
 
 const pathMap = new Map;
 
@@ -36,7 +37,7 @@ export default () => async (ctx, next) => {
       srcPath: ctx.srcPath,
     });
   }
-  if (ctx.app.debug) console.log(
+  if (ctx.app.debug) winston.log(
     'Resolve path',
     ctx.path,
     ctx.dpath,
