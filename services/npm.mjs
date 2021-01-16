@@ -6,6 +6,7 @@ import gunzip from 'gunzip-maybe';
 // FIXME: use registry and other info from .npmrc
 import npmFetch from 'npm-registry-fetch';
 import path from 'path';
+import { readConf } from '../utils.mjs';
 import semver from 'semver';
 import streamBufferCache from '@hqjs/stream-buffer-cache';
 import tar from 'tar-fs';
@@ -14,7 +15,7 @@ import tarStream from 'tar-stream';
 const Cache = streamBufferCache(LRUMap);
 
 // FIXME: check cache size calculation
-const CACHE_SIZE = 1024 * 1024 * 1024; // 1Gb
+const CACHE_SIZE = readConf('cache.npm', 1024 * 1024 * 1024); // 1Gb
 const CACHE_MAX_AGE = 30 * 24 * 60 * 60 * 1000; // 1 month
 
 // TODO: add realpath and lstat implementation for cache content (available during untar)

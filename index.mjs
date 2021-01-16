@@ -1,20 +1,11 @@
 #!/usr/bin/env -S SUPPRESS_NO_CONFIG_WARNING=true node --experimental-json-modules
 
-import config from 'config';
-import { getPort } from './utils.mjs';
+import { getPort, readConf } from './utils.mjs';
 import path from 'path';
 import start from './server.mjs';
 import yargs from 'yargs';
 
 const PORT = 10000;
-
-const readConf = (prop, def) => {
-  try {
-    return config.get(prop);
-  } catch {
-    return def;
-  }
-};
 
 (async () => {
   const port = await getPort(PORT);

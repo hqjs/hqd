@@ -4,6 +4,20 @@ import javascript from '/highlight.js/lib/languages/javascript.js';
 
 hljs.registerLanguage('javascript', javascript);
 
+const fixedHeader = document.querySelector('.fixed-header');
+const [ mainSearch, fixedSearch ] = document.querySelectorAll('.search-field');
+const toggleFixedHeader = () => {
+  if (window.scrollY >= 420) {
+    fixedHeader.classList.remove('collapsed');
+    if (document.activeElement === mainSearch) fixedSearch.focus({ preventScroll: true });
+  } else {
+    fixedHeader.classList.add('collapsed');
+    if (document.activeElement === fixedSearch) mainSearch.focus({ preventScroll: true });
+  }
+};
+toggleFixedHeader();
+document.addEventListener('scroll', toggleFixedHeader);
+
 document.body.addEventListener('click', e => {
   if (e.target.classList.contains('code-fold') && e.target.nextElementSibling) {
     e.target.classList.toggle('code-fold-expanded');

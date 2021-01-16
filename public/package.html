@@ -15,10 +15,16 @@
   </head>
 
   <body>
-    <header>
+    <header class="fixed-header">
       <div class="container header-container">
-        <a href="/"><img class="logo" src="/-/public/hqd.png"></a>
-        <input class="search" type="search" id="search-field" placeholder="&#x1f50d; Search packages"></input>
+        <div class="logo-wrap"><a href="/"><img class="logo" src="/-/public/hqd.png"></a></div>
+        <input class="search" type="search search-field" placeholder="&#x1f50d; Search packages"></input>
+        <nav class="navigation">
+          <a href="https://medium.com/@hqjsorg" target="_blank">Blog</a>
+          <a href="https://www.npmjs.com/package/@hqjs/hqd" target="_blank">NPM</a>
+          <a href="https://github.com/hqjs/hqd" target="_blank">GitHub</a>
+          <a href="mailto:hqjs.org@gmail.com">Contact</a>
+        </nav>
       </div>
     </header>
     <template id="package-template">

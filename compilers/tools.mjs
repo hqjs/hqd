@@ -5,14 +5,16 @@ import { createReadStream } from '../services/npm.mjs';
 import fs from 'fs-extra';
 // import { getInstallationStream } from '../services/npm.mjs';
 import path from 'path';
+import { readConf } from '../utils.mjs';
 import stream from 'stream';
 import streamBufferCache from '@hqjs/stream-buffer-cache';
+import winston from '../logger.mjs';
 
 const { Readable } = stream;
 
 const Cache = streamBufferCache(LRUMap);
 
-const CACHE_SIZE = 1024 * 1024 * 1024; // 1Gb
+const CACHE_SIZE = readConf('cache.compilation', 1024 * 1024 * 1024); // 1Gb
 const CACHE_MAX_AGE = 30 * 24 * 60 * 60 * 1000; // 1 month
 
 const cache = new Cache({
@@ -46,7 +48,7 @@ export const getCache = (ctx, encodingExt = '') => {
     const stats = ctx.app.table.get(ctx.srcPath);
     if (stats) stats.build.setDirty(ua);
     // TODO: Build again instead
-    console.log('Not in cache, redirect to build again', `${ctx.moduleURL}${ctx.request.url}`);
+    winston.log('Not in cache, redirect to build again', `${ctx.moduleURL}${ctx.request.url}`);
     return ctx.response.redirect(`${ctx.moduleURL}${ctx.request.url}`);
   }
   const outputPath = getOutputPath(ctx, encodingExt);

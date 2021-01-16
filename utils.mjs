@@ -1,8 +1,11 @@
+import config from 'config';
 import fs from 'fs-extra';
 import http from 'http';
 import path from 'path';
 import resolvePackage from 'resolve';
 import url from 'url';
+
+export const readConf = (prop, def) => config.has(prop) ? config.get(prop) : def;
 
 export const packageNameRegex = '@[\\w-.]+/[\\w-.]+|[\\w-.]+';
 

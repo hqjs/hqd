@@ -1,34 +1,45 @@
 import md5 from './md5.mjs';
 
-const searchField = document.querySelector('#search-field');
+const searchFields = document.querySelectorAll('.search-field');
 const info = document.querySelector('#info');
 const results = document.querySelector('#results');
 const loader = document.querySelector('.loader');
 const table = document.querySelector('#search-results');
 const packageTemplate = document.querySelector('#package-template');
 
+
 document.addEventListener('click', async e => {
   if (!e.target.classList.contains('package-keyword')) return;
-  searchField.value = e.target.innerText;
-  await makeSearch();
+  for (const searchField of searchFields) {
+    searchField.value = e.target.innerText;
+  }
+  const query = e.target.innerText.trim();
+  await makeSearch(query);
 });
 
-searchField.addEventListener('input', () => {
-  const query = searchField.value.trim();
-  if (query !== '') return;
-  loader.classList.add('hidden');
-  results.hidden = true;
-  info.hidden = false;
-  table.innerHTML = '';
+document.addEventListener('input', e => {
+  if (e.target.classList.contains('search-field')) {
+    for (const searchField of searchFields) {
+      if (searchField !== e.target) searchField.value = e.target.value;
+    }
+    const query = e.target.value.trim();
+    if (query !== '') return;
+    loader.classList.add('hidden');
+    results.hidden = true;
+    info.hidden = false;
+    table.innerHTML = '';
+  }
 });
 
-searchField.addEventListener('keypress', async event => {
-  if (event.key !== 'Enter') return;
-  await makeSearch();
-});
+for (const searchField of searchFields) {
+  searchField.addEventListener('keypress', async event => {
+    if (event.key !== 'Enter') return;
+    const query = searchField.value.trim();
+    await makeSearch(query);
+  });
+}
 
-const makeSearch = async () => {
-  const query = searchField.value.trim();
+const makeSearch = async query => {
   if (query === '') return;
   table.innerHTML = '';
   info.hidden = true;

@@ -56,11 +56,14 @@ const fetchPackageJSON = async () => {
   const deps = Object.keys(packageJSON.dependencies || []);
   dependenciesAmountElement.innerHTML = deps.length;
   for (const dep of deps) {
+    const dependencyWrapper = document.createElement('span');
+    dependencyWrapper.classList.add('package-dependency-wrapper');
     const dependency = document.createElement('a');
     dependency.href = `${window.location.origin}/-/doc/${dep}`;
     dependency.classList.add('package-dependency');
     dependency.innerText = dep;
-    dependenciesListElement.appendChild(dependency);
+    dependencyWrapper.appendChild(dependency);
+    dependenciesListElement.appendChild(dependencyWrapper);
   }
 };
 fetchPackageJSON();

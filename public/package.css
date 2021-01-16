@@ -6,13 +6,21 @@ body {
   background-color: #222;
 }
 
+.logo-wrap {
+  width: 260px;
+}
+
 .logo {
   width: 113px;
   height: 85px;
+  padding: 5px;
 }
 
-header {
-  background: radial-gradient(ellipse at bottom, #1b2735 0, #090a0f 100%);
+.fixed-header {
+  width: 100%;
+  position: fixed;
+  background: radial-gradient(ellipse at bottom, #283748 0, #090a0f 100%);
+  box-shadow: rgba(255, 255, 255, 0.6) 0 1px;
 }
 
 .header-container {
@@ -37,6 +45,28 @@ header {
 .search:focus {
   background-color: rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid white;
+}
+
+.navigation {
+  width: 260px;
+  display: flex;
+  justify-content: flex-end;
+  z-index: 1;
+}
+
+.navigation > a {
+  color: white;
+  margin: 10px;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.navigation > a:last-child {
+  margin-right: 20px;
+}
+
+.navigation > a:hover {
+  color: #ffbb00;
 }
 
 .info-package-header {
@@ -127,14 +157,20 @@ header {
   padding: 10px;
 }
 
+.package-dependency-wrapper {
+  padding: 10px 3px;
+}
+
 .package-dependency {
   text-decoration: none;
   color: white;
-  padding: 5px;
+  padding: 10px;
+  border: 1px solid #daa000;
+  border-radius: 20px;
 }
 
 .package-dependency:hover {
-  background-color: #777;
+  background-color: #daa000;
 }
 
 .filebrowser {
@@ -211,7 +247,7 @@ header {
 
 main {
   line-height: 1.5em;
-  padding: 10px;
+  padding: 99px 10px 10px;
   color: black;
   background-color: white;
   min-height: calc(100vh - 184px);
@@ -318,4 +354,10 @@ footer {
   color: white;
   padding: 20px;
   text-align: center;
+}
+
+@media screen and (max-width: 870px) {
+  .fixed-header .search-field {
+    display: none;
+  }
 }
