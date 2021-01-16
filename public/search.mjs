@@ -45,7 +45,15 @@ const makeSearch = async () => {
 
 /* eslint-disable max-statements */
 const createTableRow = pkg => {
-  const { date, description, keywords, links: { homepage, npm, repository }, name, version, publisher: { email, username } } = pkg;
+  const {
+    date,
+    description,
+    keywords,
+    links: { homepage, npm, repository },
+    name,
+    version,
+    publisher: { email, username },
+  } = pkg;
   const days = Math.floor((Date.now() - new Date(date).getTime()) / 1000 / 60 / 60 / 24);
   const grhash = md5(email.trim().toLowerCase());
 

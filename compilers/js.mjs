@@ -282,8 +282,8 @@ const precompileVue = async (ctx, content, dependencies, devDependencies) => {
             code += '\n__vue_component__.__cssModules = {}';
             hasCSSModules = true;
           }
-          const moduleName = typeof style.module === 'string' ? style.module : '$style';
-          code += `\n__vue_component__.__cssModules[${JSON.stringify(moduleName)}] = ${JSON.stringify(styleCode.modules)}`;
+          const modName = typeof style.module === 'string' ? style.module : '$style';
+          code += `\n__vue_component__.__cssModules[${JSON.stringify(modName)}] = ${JSON.stringify(styleCode.modules)}`;
         }
         code += `
           const __vue_style__${index} = document.createElement('style');

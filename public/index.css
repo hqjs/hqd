@@ -356,6 +356,8 @@ code.syntax {
   margin: 15px;
   color: #aaa;
   /* font-size: 16px; */
+  overflow: scroll;
+  overflow-wrap: normal;
 }
 
 pre code.syntax {
@@ -385,6 +387,11 @@ code.syntax span.highlight {
 
 .syntax-info {
   background: url("/-/public/info-circle-solid.svg") no-repeat 98%/2%;
+}
+
+.syntax.syntax-info {
+  overflow: visible;
+  overflow-wrap: break-word;
 }
 
 .options-list {

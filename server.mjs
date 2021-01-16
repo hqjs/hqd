@@ -7,9 +7,16 @@ import Router from '@koa/router';
 import Table from './res/table.mjs';
 import cors from '@koa/cors';
 import fs from 'fs-extra';
+import hqdSW from './hqd-sw.mjs';
 import http2 from 'http2';
 import info from './package.json';
 import path from 'path';
+import send from 'koa-send';
+
+const PUBLIC_SEND = {
+  index: 'index.html',
+  maxage: 24 * 60 * 60 * 1000, // 1 day
+};
 
 const HQD_ROOT = path.dirname(import.meta.url.slice('file://'.length));
 
@@ -31,6 +38,7 @@ const start = ({
     key: fs.readFileSync(path.resolve(ROOT, CERT, 'server-key.pem')),
   };
 
+  /* eslint-disable no-empty */
   const registryConf = {};
   try {
     const npmrc = fs.readFileSync(path.resolve(ROOT, '.npmrc'), { encoding: 'utf-8' });
@@ -38,6 +46,7 @@ const start = ({
     registryConf.registry = registry;
     registryConf.token = token;
   } catch {}
+  /* eslint-enable no-empty */
 
   const app = new Koa;
 
@@ -82,16 +91,14 @@ const start = ({
     },
   }));
   app.use(new Router()
-    .get('/', ctx => {
-      ctx.type = 'html';
-      ctx.body = fs.createReadStream(path.resolve('public/index.html'));
+    .get('/', ctx => send(ctx, 'public/index.html', PUBLIC_SEND))
+    .get('/__hqd_sw__.js', ctx => {
+      ctx.type = 'js';
+      ctx.body = hqdSW(ctx.origin);
     })
     .use('/-/doc', DocController.routes, DocController.allowedMethods)
     .use('/-/api', ApiController.routes, ApiController.allowedMethods)
-    .get('/-/public/:path+', async ctx => {
-      ctx.type = path.extname(ctx.path);
-      ctx.body = fs.createReadStream(path.resolve(ctx.path.slice('/-/'.length)));
-    })
+    .get('/-/public/:path+', ctx => send(ctx, ctx.path.slice('/-/'.length), PUBLIC_SEND))
     .get('/favicon.ico', ctx => {
       ctx.body = fs.createReadStream('./favicon.ico');
     })

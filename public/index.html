@@ -568,8 +568,21 @@ self.addEventListener('fetch', ev => ev.respondWith(fromCacheOrFetch(ev.request)
     </section>
   </div>
 </main>
-<footer>Copyright © 2018-<span class="js-year"></span>
-  hqjs</footer>
+<footer>Copyright © 2018-<span class="js-year"></span> hqjs</footer>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/__hqd_sw__.js', { scope: '/' }).then(reg => {
+      console.log('service worker registration succeeded:', reg);
+    }, error => {
+      console.log('service worker registration failed:', error);
+    });
+    navigator.serviceWorker.register('/-/public/sw.js', { scope: '/-/public/' }).then(reg => {
+      console.log('service worker registration succeeded:', reg);
+    }, error => {
+      console.log('service worker registration failed:', error);
+    });
+  }
+</script>
 <script type="module" src="/-/public/js-origin.js"></script>
 <script type="module" src="/-/public/js-demo-warning.js"></script>
 <script type="module" src="/-/public/js-year.js"></script>
