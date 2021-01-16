@@ -1,6 +1,6 @@
 {
   "name": "@hqjs/hqd",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Smart CDN for npm modules",
   "main": "index.mjs",
   "module": "index.mjs",
