@@ -521,3 +521,20 @@ footer {
     display: none;
   }
 }
+
+@media screen and (max-width: 420px) {
+  h1 img {
+    width: 300px;
+    height: 225px;
+  }
+
+  .tooltip {
+    width: auto;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .copyright {
+    display: none;
+  }
+}
