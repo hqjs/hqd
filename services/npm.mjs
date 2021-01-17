@@ -15,8 +15,10 @@ import tarStream from 'tar-stream';
 const Cache = streamBufferCache(LRUMap);
 
 // FIXME: check cache size calculation
-const CACHE_SIZE = readConf('cache.npm', 1024 * 1024 * 1024); // 1Gb
-const CACHE_MAX_AGE = 30 * 24 * 60 * 60 * 1000; // 1 month
+const CACHE_SIZE = readConf('cache.npm', 1024 * 1024 * 1024); // 1 Gb
+const CACHE_MAX_AGE = readConf('cache.npm_max_age', 30 * 24 * 60 * 60 * 1000); // 1 month
+const INFO_TTL = readConf('cache.info_ttl', 5 * 60); // 5 min
+const INFO_CHECK = readConf('cache.info_check', 10 * 60); // 10 min
 
 // TODO: add realpath and lstat implementation for cache content (available during untar)
 const cache = new Cache({
@@ -36,7 +38,7 @@ const cacheStats = new Map;
 
 const installations = new Map;
 
-const infoCache = new NodeCache({ checkperiod: 300, stdTTL: 180 });
+const infoCache = new NodeCache({ checkperiod: INFO_CHECK, stdTTL: INFO_TTL });
 
 const isTag = version => version !== '' && !/^[0-9]+(\.[0-9]+(\.[0-9]+)?)?$/.test(version);
 
@@ -66,7 +68,9 @@ export const resolveVersion = (info, version = '') => {
     return moduleVersion;
   }
   const [ major, minor = 'x', patch = 'x' ] = version.split('.');
-  return patch === 'x' ? semver.maxSatisfying(Object.keys(info.versions), `${major}.${minor}.${patch}`) : version;
+  return minor === 'x' || patch === 'x' ?
+    semver.maxSatisfying(Object.keys(info.versions), `${major}.${minor}.${patch}`) :
+    version;
 };
 
 export const resolveVersionPattern = (info, pattern = '*') => {

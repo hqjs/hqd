@@ -1,7 +1,9 @@
-import { HTTP_CODES, packageNameRegex } from '../utils.mjs';
+import { HTTP_CODES, packageNameRegex, readConf } from '../utils.mjs';
 import { getInfo, install, resolveMain, resolveVersion } from '../services/npm.mjs';
 import Router from '@koa/router';
 import hqd from '../hqd.mjs';
+
+const REDIRECT_TIME = readConf('cache.redirect_time', 5 * 60); // 5 min
 
 const resolveVersionMain = async ctx => {
   const { module, version } = ctx.params;
@@ -10,6 +12,11 @@ const resolveVersionMain = async ctx => {
     const moduleVersion = resolveVersion(info, version);
     const moduleMain = resolveMain(info, moduleVersion);
 
+    const headers = {
+      'Cache-Control': `public, max-age=${REDIRECT_TIME}`,
+      'Last-Modified': (new Date()).toUTCString(),
+    };
+    ctx.set(headers);
     return ctx.response.redirect(`/${module}@${moduleVersion}/${moduleMain}`);
   } catch (err) {
     return ctx.throw(HTTP_CODES.NOT_FOUND, err);
@@ -23,6 +30,11 @@ const ensureInstall = async ctx => {
   const moduleVersion = resolveVersion(info, version);
 
   if (version !== moduleVersion) {
+    const headers = {
+      'Cache-Control': `public, max-age=${REDIRECT_TIME}`,
+      'Last-Modified': (new Date()).toUTCString(),
+    };
+    ctx.set(headers);
     return ctx.response.redirect(`/${module}@${moduleVersion}/${contentPath}`);
   }
 

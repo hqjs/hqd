@@ -14,7 +14,7 @@ const { Readable } = stream;
 
 const Cache = streamBufferCache(LRUMap);
 
-const CACHE_SIZE = readConf('cache.compilation', 1024 * 1024 * 1024); // 1Gb
+const CACHE_SIZE = readConf('cache.compilation', 1024 * 1024 * 1024); // 1 Gb
 const CACHE_MAX_AGE = 30 * 24 * 60 * 60 * 1000; // 1 month
 
 const cache = new Cache({
