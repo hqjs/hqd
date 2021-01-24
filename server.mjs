@@ -13,6 +13,7 @@ import info from './package.json';
 import path from 'path';
 import send from 'koa-send';
 
+// TODO: ensure compression
 const PUBLIC_SEND = {
   index: 'index.html',
   maxage: 24 * 60 * 60 * 1000, // 1 day
@@ -92,6 +93,7 @@ const start = ({
   }));
   app.use(new Router()
     .get('/', ctx => send(ctx, 'public/index.html', PUBLIC_SEND))
+    .get('/index.html', ctx => send(ctx, 'public/index.html', PUBLIC_SEND))
     .get('/__hqd_sw__.js', ctx => {
       ctx.type = 'js';
       ctx.body = hqdSW(ctx.origin);
@@ -99,9 +101,8 @@ const start = ({
     .use('/-/doc', DocController.routes, DocController.allowedMethods)
     .use('/-/api', ApiController.routes, ApiController.allowedMethods)
     .get('/-/public/:path+', ctx => send(ctx, ctx.path.slice('/-/'.length), PUBLIC_SEND))
-    .get('/favicon.ico', ctx => {
-      ctx.body = fs.createReadStream('./favicon.ico');
-    })
+    .get('/favicon.ico', ctx => send(ctx, 'favicon.ico', PUBLIC_SEND))
+    .get('/robots.txt', ctx => send(ctx, 'robots.txt', PUBLIC_SEND))
     .use('', PackageController.routes(), PackageController.allowedMethods())
     .routes());
 

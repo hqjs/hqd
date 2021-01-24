@@ -90,6 +90,7 @@ h3 i {
   font-size: 16px;
   margin: 10px;
   text-align: center;
+  z-index: 1;
 }
 
 .navigation {
@@ -291,6 +292,7 @@ main section:hover .fa-cloud-download-alt {
 
 .features > section > a {
   text-decoration: none;
+  text-align: center;
   color: #222;
 }
 
