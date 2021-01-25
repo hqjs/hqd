@@ -45,10 +45,31 @@ const packageGithubElement = document.querySelector('.package-github');
 const packageNPMElement = document.querySelector('.package-npm');
 const dependenciesAmountElement = document.querySelector('.package-dependencies-amount');
 const dependenciesListElement = document.querySelector('.package-dependencies-list');
+
 packageNameElement.innerText = packageName;
+
+const addMetaElement = (property, content) => {
+  const metaDescription = document.createElement('meta');
+  metaDescription.property = property;
+  metaDescription.content = content;
+  document.head.appendChild(metaDescription);
+};
+
+const addMeta = packageJSON => {
+  const metaDescription = document.createElement('meta');
+  metaDescription.name = 'description';
+  metaDescription.content = `hqd page for ${packageName}: ${packageJSON.description}`;
+  document.head.appendChild(metaDescription);
+
+  addMetaElement('og:title', packageJSON.name);
+  addMetaElement('og:description', packageJSON.description);
+  addMetaElement('og:url', `${window.location.origin}/-/doc/${packageName}@${packageVersion}`);
+};
+
 const fetchPackageJSON = async () => {
   const res = await fetch(`${packageURL}/package.json`);
   const packageJSON = await res.json();
+  addMeta(packageJSON);
   packageDescriptionElement.innerText = packageJSON.description;
   packageWebsiteElement.href = packageJSON.homepage;
   packageGithubElement.href = packageJSON.repository.url;
@@ -76,15 +97,16 @@ dependenciescontainerElement.addEventListener('click', () => {
 
 const packageVersionsSelectElement = document.querySelector('#versions');
 const fetchPackageVersions = async () => {
-  const res = await fetch(`${window.location.origin}/-/api/info/${packageName}?path=versions`);
+  const res = await fetch(`${window.location.origin}/-/api/info/${packageName}?path=versions-list`);
   const versions = await res.json();
 
-  const sortedVersions = Object.keys(versions).sort((a, b) => {
-    const [ majA, minA, patchA ] = a.split('.');
-    const [ majB, minB, patchB ] = b.split('.');
-    return (majA > majB) |
-      (majA === majB) && (minA > minB) |
-      (minA === minB) && patchA > patchB;
+  const sortedVersions = versions.sort((a, b) => {
+    const [ majA, minA, patchA ] = a.split('.').map(x => parseInt(x));
+    const [ majB, minB, patchB ] = b.split('.').map(x => parseInt(x));
+    const agtb = (majA > majB) ||
+      ((majA === majB) && (minA > minB)) ||
+      ((minA === minB) && patchA > patchB);
+    return agtb ? 1 : -1;
   });
   for (const version of sortedVersions) {
     const option = document.createElement('option');
@@ -184,6 +206,7 @@ const fetchMD = async file => {
   for (const a of fileContentElement.querySelectorAll('a')) {
     if (a.href.startsWith(`${window.location.origin}/-/doc`)) a.classList.add('js-internal-link');
     a.target = '_blank';
+    a.rel = 'noopener';
     a.href = a.href.replace(`${window.location.origin}/-/doc`, window.location.origin);
   }
   for (const img of fileContentElement.querySelectorAll('img')) {

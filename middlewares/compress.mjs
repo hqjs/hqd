@@ -1,10 +1,11 @@
+import { HTTP_CODES, readConf } from '../utils.mjs';
 import { contentExists, getCache, getOutputPath, setCache } from '../compilers/tools.mjs';
-import { HTTP_CODES } from '../utils.mjs';
 import fs from 'fs-extra';
 import winston from '../logger.mjs';
 import zlib from 'zlib';
 
-const COMPRESSION_THRESHOLD = 1024; // 1Kb
+// TODO: we compare against untranspiled size, better to calculate transpiled size instead
+const COMPRESSION_THRESHOLD = readConf('compression_threshold', 256); // 256b
 
 const encode = {
   br: zlib.createBrotliCompress,

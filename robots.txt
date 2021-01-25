@@ -4,3 +4,4 @@ Allow: /$
 Allow: /index.html
 Allow: /favicon.ico
 Allow: /-/public/
+Allow: /-/doc/

@@ -1,11 +1,11 @@
-import { HTTP_CODES, packageNameRegex } from '../utils.mjs';
+import { HTTP_CODES, packageNameRegex, readConf } from '../utils.mjs';
 import { createReadStream, getInfo, install, readdir, search, stat } from '../services/npm.mjs';
 import Router from '@koa/router';
 import path from 'path';
 
 // TODO: use immutable if available
 const STATIC_MAX_AGE = 60 * 60 * 24 * 365; // 365 days
-const MAX_AGE = 30; // 30 seconds
+const MAX_AGE = readConf('api.max_age', 5 * 60); // 5 min
 const DEFAULT_SEARCH_LIMIT = 50;
 
 const packageSearch = async ctx => {
@@ -34,7 +34,11 @@ const packageInfo = async ctx => {
   const { module } = ctx.params;
   const { path: queryPath } = ctx.query;
   const info = await getInfo(module, ctx.app.registryConf);
-  ctx.body = queryPath ? info[queryPath] : info;
+  ctx.body = queryPath ?
+    queryPath === 'versions-list' ?
+      Object.keys(info.versions || {}) :
+      info[queryPath] :
+    info;
   if (!ctx.body) {
     return ctx.throw(HTTP_CODES.NOT_FOUND, 'not implemented');
   }
